@@ -13,6 +13,7 @@
 <script src="js/iscroll-probe.js"></script>
 <script type="text/javascript">
 //滚动
+//滚动
 function gundongFn(){
 	var myScroll,
 		bScrollEndOne = true,
@@ -24,24 +25,34 @@ function gundongFn(){
 		mouseWheel: true,
 		interactiveScrollbars: true,
 		shrinkScrollbars: 'scale',
+		probeType: 3,
 		fadeScrollbars: true
 	});
+
+	myScroll.on('beforeScrollStart', function(){
+		if(this.y==this.maxScrollY){
+			$pullUp.show();
+			myScroll.refresh();
+			myScroll.scrollToElement($('.pullUp').get(0), null, null, true);
+		}
+	});
 	myScroll.on('scrollEnd', function(){
-		if(this.y<=this.maxScrollY && bScrollEndOne){
+		if(this.y==this.maxScrollY && bScrollEndOne){
 			bScrollEndOne =false;
 			$pullUp.addClass('loading');
+			myScroll.refresh();
 			pullUpAction();
 		}
 	});
 
 	function pullUpAction() {
 		setTimeout(function () {
-			var sHtml = '<li>Pretty row 1</li>';
+			var sHtml = '<li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li><li>Pretty row 1</li>';
 			$("#thelist").append(sHtml);
-			$('.pullUp').removeClass('loading');
+			$('.pullUp').removeClass('loading').hide();
 			myScroll.refresh();
 			bScrollEndOne = true;
-		}, 1000);
+		}, 2000);
 	};
 }
 
@@ -98,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () { setTimeout(gundongFn
 			<li>Pretty row 39</li>
 			<li>Pretty row 40</li>
 		</ul>
-		<div class="pullUp">
+		<div class="pullUp dn">
 			<span class="pullUpIcon"></span>
 		</div>
 	</div>
